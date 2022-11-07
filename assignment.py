@@ -31,24 +31,48 @@ connection = sqlite3.connect(file)
 cursor = connection.cursor()
 
 Tempscript = """
-DROP TABLE IF EXISTS Customers;
 
-CREATE TABLE Customers(
-id INTEGER PRIMARY KEY AUTOINCREMENT,
+create table if not exists Customers(
 petname TEXT,
 petspecies TEXT, 
-pet breed TEXT,
-department TEXT,
-position TEXT,
-hireDate TEXT);
-
-INSERT INTO Customers(name, salary, department, position, hireDate) VALUES('Dave', 300, 'Marketing', 'LV1', '2020-01-01');
-INSERT INTO Customers(name, salary, department, position, hireDate) VALUES('Clara', 420, 'Sales', 'LV2', '2018-01-11');
-INSERT INTO Customers(id, name, salary, department, position, hireDate) VALUES(3, 'Jane', 620, 'Developer', 'LV4', '2015-11-01');
-INSERT INTO Customers VALUES(4, 'Peter', 530, 'Developer', 'LV2', '2020-11-01'); 
+petbreed TEXT,
+owner TEXT,
+ownerphonenumber TEXT,
+owneremail TEXT,
+balance TEXT,
+firstvisit TEXT);
 """
 
+trying = """
+INSERT INTO Customers(petname, petspecies, petbreed, owner, ownerphonenumber, owneremail, balance, firstvisit) VALUES('PET1', 'CAT', 'PERSIAN', 'YANG', '778-220-2300', 'YANG@GMAIL.COM', '$292', '2022-03-01');
+"""
+
+cursor.execute()
 
 
-cursor.execute('CREATE Customers; pet name, pet species, pet breed, owner name, owner phone number, owner email, owner balance, date of first visit')
 
+
+def display():
+    query = "select * from Customers"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in result:
+        returnvalue = ""
+        for x in i:
+            returnvalue = returnvalue +" "+ x
+        print(returnvalue)
+
+
+def createnew():
+    a1 = input("PET NAME ")
+    a2 = input("PET SPECIES ")
+    a3 = input("PET BREED ")
+    a4 = input("OWNER ")
+    a5 = input("OWNER PHONENUMBER ")
+    a6 = input("OWNER EMAIL ")
+    a7 = input("BALANCE ")
+    a8 = input("FIRST VISIT ")
+    query = f"insert into Customers(petname, petspecies, petbreed, owner, ownerphonenumber, owneremail, balance, firstvisit) values ('{a1}','{a2}','{a3}','{a4}','{a5}','{a6}','{a7}','{a8}');"
+    cursor.execute(query)
+
+display()
