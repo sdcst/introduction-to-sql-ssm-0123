@@ -33,6 +33,7 @@ cursor = connection.cursor()
 Tempscript = """
 
 create table if not exists Customers(
+id int not null unique,
 petname TEXT,
 petspecies TEXT, 
 petbreed TEXT,
@@ -47,8 +48,7 @@ trying = """
 INSERT INTO Customers(petname, petspecies, petbreed, owner, ownerphonenumber, owneremail, balance, firstvisit) VALUES('PET1', 'CAT', 'PERSIAN', 'YANG', '778-220-2300', 'YANG@GMAIL.COM', '$292', '2022-03-01');
 """
 
-cursor.execute()
-
+cursor.execute(Tempscript)
 
 
 
@@ -56,14 +56,72 @@ def display():
     query = "select * from Customers"
     cursor.execute(query)
     result = cursor.fetchall()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    returnvalue = ""
     for i in result:
-        returnvalue = ""
         for x in i:
+            if type(x) == int:
+                x = str(x)
             returnvalue = returnvalue +" "+ x
         print(returnvalue)
 
+def findbyid():
+    keyword = input("Find by id")
+    query = f"""
+    SELECT * FROM Customers
+    WHERE id LIKE {keyword}
+    
+    """     
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in result:
+        returnvalue = ""
+        for x in i:
+            if type(x) == int:
+                x = str(x)
+            returnvalue = returnvalue +" "+ x
+        print(returnvalue)
+
+def findbyemail():
+    keyword = input("Find by email")
+    query = f"""
+    SELECT * FROM Customers
+    WHERE owneremail LIKE '{keyword}'
+    
+    """     
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in result:
+        returnvalue = ""
+        for x in i:
+            if type(x) == int:
+                x = str(x)
+            returnvalue = returnvalue +" "+ x
+        print(returnvalue)
+
+def findbyphone():
+    keyword = input("Find by phone number")
+    query = f"""
+    SELECT * FROM Customers
+    WHERE ownerphonenumber LIKE {keyword}
+    
+    """     
+    cursor.execute(query)
+    result = cursor.fetchall()
+    for i in result:
+        returnvalue = ""
+        for x in i:
+            if type(x) == int:
+                x = str(x)
+            returnvalue = returnvalue +" "+ x
+        print(returnvalue)
 
 def createnew():
+    query = "select id from Customers"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    idid = len(result) + 1
     a1 = input("PET NAME ")
     a2 = input("PET SPECIES ")
     a3 = input("PET BREED ")
@@ -72,7 +130,8 @@ def createnew():
     a6 = input("OWNER EMAIL ")
     a7 = input("BALANCE ")
     a8 = input("FIRST VISIT ")
-    query = f"insert into Customers(petname, petspecies, petbreed, owner, ownerphonenumber, owneremail, balance, firstvisit) values ('{a1}','{a2}','{a3}','{a4}','{a5}','{a6}','{a7}','{a8}');"
+    query = f"insert into Customers(id, petname, petspecies, petbreed, owner, ownerphonenumber, owneremail, balance, firstvisit) values ({idid},'{a1}','{a2}','{a3}','{a4}','{a5}','{a6}','{a7}','{a8}');"
     cursor.execute(query)
+    connection.commit()
 
-display()
+
