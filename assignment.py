@@ -66,8 +66,14 @@ def display():
             returnvalue = returnvalue +" "+ x
         print(returnvalue)
 
+findby = ("id", "petname", "petspecies", "petbreed", "owner", "ownerphonenumber", "owneremail", "balance", "firstvisit")
+
+
+
 def findbyid():
-    keyword = input("Find by id")
+    print()
+    keyword = input("Find by id ")
+    print()
     query = f"""
     SELECT * FROM Customers
     WHERE id LIKE {keyword}
@@ -76,15 +82,17 @@ def findbyid():
     cursor.execute(query)
     result = cursor.fetchall()
     for i in result:
-        returnvalue = ""
         for x in i:
+            aa = findby[i.index(x)]
             if type(x) == int:
                 x = str(x)
-            returnvalue = returnvalue +" "+ x
-        print(returnvalue)
+            returnvalue = aa + " " + x 
+            print(returnvalue)
 
 def findbyemail():
-    keyword = input("Find by email")
+    print()
+    keyword = input("Find by email ")
+    print()
     query = f"""
     SELECT * FROM Customers
     WHERE owneremail LIKE '{keyword}'
@@ -93,29 +101,31 @@ def findbyemail():
     cursor.execute(query)
     result = cursor.fetchall()
     for i in result:
-        returnvalue = ""
         for x in i:
+            aa = findby[i.index(x)]
             if type(x) == int:
                 x = str(x)
-            returnvalue = returnvalue +" "+ x
-        print(returnvalue)
+            returnvalue = aa + " " + x 
+            print(returnvalue)
 
 def findbyphone():
-    keyword = input("Find by phone number")
+    print()
+    keyword = input("Find by phone number ")
+    print()
     query = f"""
     SELECT * FROM Customers
-    WHERE ownerphonenumber LIKE {keyword}
+    WHERE ownerphonenumber LIKE '{keyword}'
     
     """     
     cursor.execute(query)
     result = cursor.fetchall()
     for i in result:
-        returnvalue = ""
         for x in i:
+            aa = findby[i.index(x)]
             if type(x) == int:
                 x = str(x)
-            returnvalue = returnvalue +" "+ x
-        print(returnvalue)
+            returnvalue = aa + " " + x 
+            print(returnvalue)
 
 def createnew():
     query = "select id from Customers"
@@ -135,3 +145,25 @@ def createnew():
     connection.commit()
 
 
+def main():
+    while True:
+        print()
+        print("1. Find by id")
+        print("2. Find by phone number")
+        print("3. Find by E-mail")
+        print("4. Add a new record")
+        print("5. Quit")
+        print()
+        xx = input()
+        if xx == "1":
+            findbyid()
+        elif xx == "2":
+            findbyphone()
+        elif xx == "3":
+            findbyemail()
+        elif xx == "4":
+            createnew()
+        elif xx == "5":
+            break
+
+main()
