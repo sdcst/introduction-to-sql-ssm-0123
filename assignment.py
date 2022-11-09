@@ -66,7 +66,7 @@ def display():
             returnvalue = returnvalue +" "+ x
         print(returnvalue)
 
-findby = ("id", "petname", "petspecies", "petbreed", "owner", "ownerphonenumber", "owneremail", "balance", "firstvisit")
+findby = ("ID", "Petname", "Petspecies", "Petbreed", "Owner name", "Owner phonenumber", "Owner email", "Balance", "Firstvisit")
 
 
 
